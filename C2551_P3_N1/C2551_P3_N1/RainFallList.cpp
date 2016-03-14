@@ -4,77 +4,41 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <sstream>
-#include <vector>
 #include <fstream>
 #include "RainFallList.h"
 
 using namespace std;
 /*******************************************
-DisplayReport
-will make the report of this format
-
-***************************************************
-
-Survey of Cafeteria Food
-***************************************************"
-
-Food Item			   Like			Dislike
-Cheese Pizza			3				0
-Hamburger				1				2
-Fish Sticks				2				1
-Mystery Meat			0				3
-
-* *********************************************************/
-//RainFallList::RainFallList(string nName[])
-//{
-//	monthName[] = nName[];	
+class RainFallList
+getInputFile	-- to load rain amount from file
+				to rainAmt
+*********************************************************/
+//default constructor
+RainFallList::RainFallList()
+{
+	rainAmt = new double[NUM_MONTHS];
+	monthName = new string[NUM_MONTHS];
 	
-	/*
-
-	numRainAmt = num;
-
-	if (num > 0)
-	{
-		mnthRainAmt = new double[num];
-
-		arrPtr = new double*[num];
-		for (int count = 0; count < numRainAmt; count++)
-		{
-
-			mnthRainAmt[count] = rainAmt[count];
-			arrPtr[count] = &mnthRainAmt[count];
-			//cout << "\n arrPtr1  " << arrPtr[count] << " minIndex   " << mnthRainAmt[count];
-
-		}
-		
-	}
-	*/
-//};
-
-/*
-RainFallList::~RainFallList()
-{/*
-	if (numRainAmt > 0)
-	{
-		delete[] mnthRainAmt;
-		mnthRainAmt = 0;
-		delete[] arrPtr;
-		arrPtr = 0;
-
-	}
-
+	monthName[0] = "January";
+	monthName[1] = "Febrary";
+	monthName[2] = "March";
+	monthName[3] = "April";
+	monthName[4] = "May";
+	monthName[5] = "June";
+	monthName[6] = "July";
+	monthName[7] = "August";
+	monthName[8] = "September";
+	monthName[9] = "October";
+	monthName[10] = "November";
+	monthName[11] = "December";
+	
 }
-*/
-void RainFallList::getInputFile(int months, double rainAmt[])
+void RainFallList::getInputFile()
 {
 
 
 
 	//read in cafeteria file
-	//readData till EOF
-	months = 12;
-	double in;
 	ifstream inFile;
 	inFile.open("rainfall.txt");
 	if (!inFile)
@@ -83,155 +47,82 @@ void RainFallList::getInputFile(int months, double rainAmt[])
 	}
 	else
 	{
-		for (int monthI = 0; monthI < 12; monthI++)
+		for (int monthI = 0; monthI < NUM_MONTHS; monthI++)
 		{
-
+			//read in file
 			inFile >> in;
-			rainAmt[monthI] = in;
-			cout << "\n load data in  " << in << " load data array   " << rainAmt[monthI] <<" index  " <<monthI;
 			
+			//load data into array
+			rainAmt[monthI] = in;
 		};
 		inFile.close();
 	};
-	for (int count = 0; count < 12; count++)
-	{
-		cout << "\n in array1 " << rainAmt[count] << " index    "   << count;
-	}
 
+}
+/***********************************************
+selectSort
+sort both the month and rainfall amount
+1.	In descending order by rainfall amount,
+****************************************/
 
-};
-/*
-void RainFallList::setPtr(int num, int numRainAmt, double nRainAmt[], double **arrPtr, double rainAmt[])
+void RainFallList::selectSort()
 {
-	numRainAmt = 12;
-	if (num > 0)
-	{
-		nRainAmt = new double[num];
-		arrPtr = new double*[num];
-		for (int count = 0; count < 12; count++)
-		{
-
-			nRainAmt[count] = rainAmt[count];
-			arrPtr[count] = &nRainAmt[count];
-			//cout << "\n arrPtr1  " << arrPtr[count] << " minIndex   " << mnthRainAmt[count];
-
-		}
-		selectSort();
-	}
-};
-*/
-void RainFallList::selectSort(double array1[], int size)
-{
-	
-	
-	int startScan, minIndex;
-	double maxValue;
+	int startScan;
+	int size = NUM_MONTHS;
 	string maxMnthName;
 	for (startScan = 0; startScan < (size - 1); startScan++)
 	{
-		
+
 		minIndex = startScan;
-		maxValue = array1[startScan];
-		//maxMnthName = monthName[startScan];
-		cout << "\n  array1[startScan]  " << array1[startScan] << " startScan  " << startScan <<  endl;
+		maxValue = rainAmt[startScan];
+		maxMnthName = monthName[startScan];
 
-		for (int index = (startScan + 1); index < size; index++)
+		for (int index = (startScan + 1); index < NUM_MONTHS; index++)
 		{
-			if (array1[index] > maxValue)
+			if (rainAmt[index] > maxValue)
 			{
-				//maxMnthName = monthName[index];
-				maxValue = array1[index];
+				maxMnthName = monthName[index];
+				maxValue = rainAmt[index];
 				minIndex = index;
-				
-				cout << "\n if loop  array1  " << array1[index] << " index  " << index;
-				cout << " maxValue   " << maxValue;
-				//cout << " monthName[index]  "<< monthName[index]<< endl;
+
 			}
 
 		}
-		array1[minIndex] = array1[startScan];
-		array1[startScan] = maxValue;
-		//monthName[minIndex] = monthName[startScan];
-		cout << "\n for loop array1[minIndex]  " << array1[minIndex] << " minIindex  " << minIndex;
-		cout << "\n array1[startScan] " << array1[startScan] << " startScan " << startScan;
-		cout << " monthName[startScan]  " << monthName[0] << endl;
-
-		//monthName[startScan] = maxMnthName;
-		
-	}
-	for (int count = 0; count < size; count++)
-	{
-		cout << "   1  " << array1[count] << " ";
-		cout << endl;
+		rainAmt[minIndex] = rainAmt[startScan];
+		rainAmt[startScan] = maxValue;
+		monthName[minIndex] = monthName[startScan];
+		monthName[startScan] = maxMnthName;
 
 	}
-	cout << endl;
 }
-/*
-	int minIndex;
-	double *minElem;
-	for (int scan = 0; scan < (12 - 1); scan++)
-	{
-		minIndex = scan;
-		minElem = arrPtr[scan];
-		for (int index = scan + 1; index < 12; index++)
-		{
-			if (*(arrPtr[index]) < *minElem)
-			{
-				minElem = arrPtr[index];
-				minIndex = index;
-				//cout << "\n arrPtr  " << arrPtr[index] << " minIndex   " << minIndex;
+/********************************************
+rainSortDisplay
+Displays:	The output displays
+1.	the both the month and rainfall amount
+2.	In descending order by rainfall amount,
+3	One month information per line.
 
-			}
-		}
-		arrPtr[minIndex] = arrPtr[scan];
-		arrPtr[scan] = minElem;
-	}
-	
-}
+***********************************/
 
-void RainFallList::rainfallReport()
+void RainFallList::rainSortDisplay()
 {
 	cout << "\n   ***************************************************" << endl;
 
-	cout << "		      Rainfall Report For the Year               " << endl;
+	cout << "             Rainfall For the Year                      " << endl;
+	cout << "     Sorted In Descending Order By Rainfall Amount      " << endl;
 	cout << "\n   ***************************************************" << endl;
-	cout << setw(21) << left << "   Month        ";
-	cout << setw(18) << left << "   Rainfall              ";
+	cout << "      " << setw(21) << left << "   Month        ";
+	cout << "       " << setw(18) << left << "   Rainfall              ";
 	cout << endl << endl;
-
-	for (int count = 0; count < 12; count++)
+	for (int reportI = 0; reportI < NUM_MONTHS; reportI++)
 	{
-		cout << "   " << setw(20) << left << monthName[count];
-		cout << "   " << setw(21) << left ;
-		
+		cout << "         " << setw(21) << left << monthName[reportI];
+		cout << "         " << setw(18) << left << rainAmt[reportI];
 		cout << endl;
-
-
-		
 	}
-	cout << endl;
 
-}
-void RainFallList::rainfallSorted()
-{
-	cout << "\n   ***************************************************" << endl;
-
-	cout << "		      Rainfall Report For the Year               " << endl;
-	cout << "\n   ***************************************************" << endl;
-	cout << setw(21) << left << "   Month        ";
-	cout << setw(18) << left << "   Rainfall              ";
 	cout << endl << endl;
 
-	for (int count = 0; count < 12; count++)
-	{
-		cout << arrPtr[count]<< " "<<endl;
-	}
-	cout << endl;
-
 }
-
-*/
-
 
 
