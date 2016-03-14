@@ -30,38 +30,38 @@ int main()
 	UserInput userNumInput;
 	ValidateNum valNum;
 
-	LoadArray loadArray;
 	CalcAvgMode calAM;
 	DisplayRep disRep;
 	
 	double aveNum;
 	int modNum;
-
-	int inNum = -98;
-	string statusMsg = "Begin_Input ";
+	int movieNum;
+	int studNum = -98;
+	string statusMsg = "Begin_Input";
 	
-	while (statusMsg != "end_Input")
+	if (statusMsg != "end_Input")
 	{
 		//	Ask the user how many students were surveyed.
 		
 		cout << "\n\n    How many students were surveyed?  ";
-		inNum = userNumInput.userNumIn();
+		studNum = userNumInput.userNumIn();
 
 		/*************************
 		--validate each number :
 		************************/
-		statusMsg = valNum.errorMsg(inNum);
+		statusMsg = valNum.errorMsg(studNum);
 
 		/********************************************
 		An array of integers with this many elements should be dynamically allocated.
 		*******************************************/
-		while (statusMsg == "good_Num")
+		if (statusMsg == "good_Num")
 		{
-			loadArray.alloArray(statusMsg, inNum);
+			LoadArray ldArray(studNum);
 
-			while (statusMsg == "good_Num")
+			if (statusMsg == "good_Num")
 			{
-				for (int n = 0; n < inNum; n++)
+				int n = 0;
+				while (n < studNum)
 				{
 					int numStd = n + 1;
 					//			Allow the user to enter the number of movies each student saw into the array.
@@ -70,17 +70,19 @@ int main()
 					cout << numStd << "  see?  ";
 
 
-					inNum = userNumInput.userNumIn();
+					movieNum = userNumInput.userNumIn();
 					//	 Validate all input.
 
-					valNum.errorMsg(inNum);
-					while (statusMsg == "good_Num")
+					valNum.errorMsg(movieNum);
+					if (statusMsg == "good_Num")
 					{
-						loadArray.loadInArray(n, inNum, statusMsg); 
+						ldArray.loadInArray(n, movieNum, statusMsg); 
+						n++;
 					}
 				}
-			}
+			}ldArray.showArray(studNum);
 		}
+		
 	}
 
 	
@@ -89,14 +91,14 @@ int main()
 	/**************************************************************
 	calculate average and mode
 ****************************************************************/
-	
-	//aveNum = calAM.avgCalc(movieCnt,inNum);
+	/*
+	aveNum = calAM.avgCalc(movieCnt,inNum);
 	// sort the data before mode calc
 
-	//sortModeCalc(movieCnt, inNum);
+	sortModeCalc(movieCnt, inNum);
 	
-	//modNum = calAM.modeCalc(movieCnt,inNum);
-
+	modNum = calAM.modeCalc(movieCnt,inNum);
+	*/
 	/*************************************************
 	display the average with one decimal place 
 	display the mode(the value that occurs most often).

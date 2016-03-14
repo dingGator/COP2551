@@ -20,10 +20,10 @@ public:
 	
 	string errorInMsg;
 	
-	LoadArray();  // constructor
-	void alloArray(string, int); 
+	LoadArray(int);  // constructor
+	//void alloArray(string, int); 
 	string loadInArray(int, int, string);
-
+	void showArray(int);
 	//~LoadArray();
 };
 #endif

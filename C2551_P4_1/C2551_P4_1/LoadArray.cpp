@@ -8,28 +8,17 @@
 
 using namespace std;
 
-LoadArray::LoadArray()
+LoadArray::LoadArray(int stNum)
 {
 	errorInMsg = "good_Num";
+	//dynamic allocation of array
+	movieCnt = new int[stNum];
+	arrPtr = new int*[stNum];
 
 }
 /***************************
 LoadArray::loadInArray
-* store the value in the vector
-*--if it is not a duplicate of a previous number entered.
 ****************************************/
-void LoadArray::alloArray(string msgError, int stNum)
-{
-	errorInMsg = msgError;
-	
-	if (errorInMsg== "good_Num" )
-	{
-		movieCnt = new int[stNum];
-		arrPtr = new int*[stNum];
-		//dynamic allocation of array
-	}
-}
-
 string LoadArray::loadInArray(int n, int inputOneNum, string msgError)
 {
 		errorInMsg = msgError;
@@ -40,4 +29,11 @@ string LoadArray::loadInArray(int n, int inputOneNum, string msgError)
 		}
 		return errorInMsg;
 	
+}
+void LoadArray::showArray(int stNum)
+{
+	for (int i = 0; i < stNum; i++)
+	{
+		cout << "\n\n    movieCnt array    " << movieCnt[i] << endl;;
+	}
 }
