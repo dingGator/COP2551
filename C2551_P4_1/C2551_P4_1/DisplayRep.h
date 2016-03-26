@@ -6,7 +6,11 @@
 #include <string>
 using namespace std;
 /*************************************
+class DisplayRep
+	display average
+	display mode
 ***************************************/
+
 class DisplayRep
 {
 private:
@@ -26,7 +30,7 @@ public:
 	/****************************************
 	display mode of the survey
 	**************************************/
-	void displaySurMod(int );
+	void displaySurMod(int);
 
 	~DisplayRep(){};
 };

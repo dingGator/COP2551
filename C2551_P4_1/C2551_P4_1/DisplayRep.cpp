@@ -1,11 +1,14 @@
 //Kim Lien Chu
 //COP2551.0M1
 #include <iostream>
+#include <iomanip>
 #include <string>
 
 #include "DisplayRep.h"
 
 using namespace std;
+
+
 /*******************************
 display header
 ******************************/
@@ -21,16 +24,18 @@ void DisplayRep::displayHeader()
 /*************************************
 display average number of movies watched
 ************************************/
+
 void DisplayRep::displaySurAvg(double avgNum)
 {
 	//display
-	cout << fixed << showpoint;//<< setprecision(1);
+	cout << fixed << showpoint<< setprecision(1);
 	cout << "\n        Student watched an average of :  ";
 	cout << avgNum << "  movies.  " << endl;
 }
 /****************************************
 display mode of the survey
 **************************************/
+
 void DisplayRep::displaySurMod(int modeNum)
 {
 	cout << "\n        The mode is:   ";

@@ -21,14 +21,15 @@ and error msg back to the program
 *--- if 0 or less than  0               --- error range number
 **********************************/
 
-string ValidateNum::errorMsg(int& inNum)
+string ValidateNum::valInput(int & inNum)
 {
 
 
 	if (inNum == sentinel_99)  //sentinel
 	{
-		cout << "\n\n  You wanted to stop entering numbers.  " << endl;
-		errorMsgOut = "end_Input";
+		cout << "\n\n  You wanted to stop entering numbers.  Good bye    " << endl;
+
+		exit(0);
 	}
 	else if (inNum <= 0)
 	{

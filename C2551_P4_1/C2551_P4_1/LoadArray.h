@@ -6,24 +6,43 @@
 #include <string>
 using namespace std;
 /*************************************
+class LoadArray
+	load data
+	calculate average
+	calculate mode
 ***************************************/
+
 class LoadArray
 {
 private:
 	// variables 
-	
+	double sumNum;
+
+	double avgNum;
+
+	int minIndex;
+	int minValue;
+	int number;
+	int mode;
+	int count;
+	int countMode;
+
+	int modeNum;
+
+	string errorMsg;
+	string good_Num = "good_Num";
+	string errorInMsg;
 
 public:
 	int *movieCnt;
-	int **arrPtr;
-
 	
-	string errorInMsg;
-	
-	LoadArray(int);  // constructor
-	//void alloArray(string, int); 
-	string loadInArray(int, int, string);
+	LoadArray(){};
+	LoadArray(int);  // overload constructor
+	string loadInArray(int, int, string );
 	void showArray(int);
-	//~LoadArray();
+	double avgCalc(int);
+	void sortModeCalc(int);
+	int modeCalc(int);
+	~LoadArray(){};
 };
 #endif

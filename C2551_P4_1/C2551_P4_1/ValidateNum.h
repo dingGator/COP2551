@@ -11,6 +11,7 @@ class ValidateNum
 *between 10 and 100, inclusive
 
 ***************************************/
+
 class ValidateNum
 {
 private:
@@ -23,7 +24,7 @@ private:
 public:
 	string errorMsgOut;
 	ValidateNum();  // constructor
-	string errorMsg(int &);
+	string valInput(int &);
 	~ValidateNum(){};
 };
 #endif

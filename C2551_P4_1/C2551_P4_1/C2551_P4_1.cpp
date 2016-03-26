@@ -2,7 +2,6 @@
 //COP2551.0M1
 #include <iostream>
 
-#include "CalcAvgMode.h"
 #include "DisplayRep.h"
 #include "LoadArray.h"
 #include "UserInput.h"
@@ -11,102 +10,105 @@
 	
 using namespace std;
 /********************************************************
-program:
+Program 4:
 
-1.  ask the user how many students were surveyed.  
-2.  allow the user to enter the number of movies each student saw into the array.
+1.  ask the user how many students were surveyed.
 		Validate all input.
-3.  calculate and display the average and the mode 
+2.  allow the user to enter the number of movies each student saw 
+		Validate all input.
+		enter the number of movies into the array.
+3.  calculate and display the average and the mode
 ****************************************************************/
 int main()
-{	
-/**************************************************************
-	ask the user how many students were surveyed.
-	An array of integers with this many elements should be dynamically allocated.
-	allow the user to enter the number of movies each student saw into the array.
-	Validate all input.
-****************************************************/
-	
-	UserInput userNumInput;
+{
+
+	UserInput<int> userEnterInput;
 	ValidateNum valNum;
 
-	CalcAvgMode calAM;
-	DisplayRep disRep;
 	
+	DisplayRep  disRep;
 	double aveNum;
 	int modNum;
 	int movieNum;
-	int studNum = -98;
-	string statusMsg = "Begin_Input";
-	
-	if (statusMsg != "end_Input")
-	{
-		//	Ask the user how many students were surveyed.
-		
-		cout << "\n\n    How many students were surveyed?  ";
-		studNum = userNumInput.userNumIn();
+	string begin_Input = "begin_Input";
+	string good_Num = "good_Num";
+	int numberOfStudent = -98;
+	string statusMsg;
+	statusMsg = begin_Input;
 
-		/*************************
-		--validate each number :
-		************************/
-		statusMsg = valNum.errorMsg(studNum);
+
+		/**************************************************************
+		Ask the user how many students were surveyed.
+		An array of integers with this many elements is be dynamically allocated.
+		Validate all input.
+		****************************************************/
+				
+		numberOfStudent = userEnterInput.userEnterIn(statusMsg,numberOfStudent);
 
 		/********************************************
-		An array of integers with this many elements should be dynamically allocated.
+		//	 Validate all input.
 		*******************************************/
-		if (statusMsg == "good_Num")
+		statusMsg = valNum.valInput(numberOfStudent);
+		if (statusMsg == good_Num)
 		{
-			LoadArray ldArray(studNum);
+			/***************************************
+			//	allocate pointer array
+			********************************/
+			LoadArray  ldArray(numberOfStudent);
 
-			if (statusMsg == "good_Num")
+			if (statusMsg == good_Num)
 			{
 				int n = 0;
-				while (n < studNum)
+				while (n < numberOfStudent)
 				{
 					int numStd = n + 1;
-					//			Allow the user to enter the number of movies each student saw into the array.
+					/********************************************
+					//			Allow the user to enter the number
+					//of movies each student saw into the array.
+					*******************************************/
 
-					cout << "\n\n how many movies did student # ";
-					cout << numStd << "  see?  ";
-
-
-					movieNum = userNumInput.userNumIn();
+					movieNum = userEnterInput.userEnterIn(statusMsg,n);
+					/********************************************
 					//	 Validate all input.
+					*******************************************/
 
-					valNum.errorMsg(movieNum);
-					if (statusMsg == "good_Num")
+					statusMsg = valNum.valInput(movieNum);
+					if (statusMsg == good_Num)
 					{
-						ldArray.loadInArray(n, movieNum, statusMsg); 
+
+						/********************************************
+						//	 Load number of movie into array.
+						*******************************************/
+
+						ldArray.loadInArray(n, movieNum, statusMsg);
 						n++;
 					}
 				}
-			}ldArray.showArray(studNum);
-		}
+			}
+			
+		/**************************************************************
+					calculate average and mode
+		****************************************************************/
+
+			aveNum = ldArray.avgCalc(numberOfStudent);
+			/**************************************************************
+			// sort the data before mode calc
+			****************************************************************/
+			ldArray.sortModeCalc(numberOfStudent);
+
+			modNum = ldArray.modeCalc(numberOfStudent);
 		
+
+		/*************************************************
+		display the average with one decimal place
+		display the mode(the value that occurs most often).
+		***********************************************/
+
+		disRep.displayHeader();
+		disRep.displaySurAvg(aveNum);
+		disRep.displaySurMod(modNum);
 	}
 
-	
-
-
-	/**************************************************************
-	calculate average and mode
-****************************************************************/
-	/*
-	aveNum = calAM.avgCalc(movieCnt,inNum);
-	// sort the data before mode calc
-
-	sortModeCalc(movieCnt, inNum);
-	
-	modNum = calAM.modeCalc(movieCnt,inNum);
-	*/
-	/*************************************************
-	display the average with one decimal place 
-	display the mode(the value that occurs most often).
-***********************************************/
-	disRep.displayHeader();
-	//disRep.displaySurAvg(aveNum);
-	//disRep.displaySurMod(modNum);
-	
 		return 0;
 }
 
