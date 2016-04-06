@@ -38,13 +38,21 @@ private:
 
 
 public:
+//	array to store the month name
+//	string monthName;
 
 //default constructor
 	RainFallList();			
 
+// for loading monthName
+	//RainFallList(string mN){ monthName= mN;}; 
+
 //Destructor
 	~RainFallList(){};
 	
+// to load monthName
+	//string getMonthName(){ return monthName; }
+
 // to load rain amount from file
 	void getInputFile();	
 
